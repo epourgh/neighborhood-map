@@ -1,0 +1,36 @@
+Linux - like Apple OS and Windows OS, popular in open source community
+
+redhat — large corporate costumers and support
+ubuntu — ease of use on servers, desktops, and laptops
+mint — desktop users with proprietary media support
+coreos — clustered, containerized deployment of apps
+
+Some places to start your research:
+
+https://distrowatch.com/
+— Distro Watch has been around since 2001 as a source of news about Linux distributions and other Free and Open-Source operating systems.
+
+https://en.wikipedia.org/wiki/Comparison_of_Linux_distributions
+— Wikipedia article comparing current and former Linux distributions.
+
+Vagrant
+Type vagrant init ubuntu/trusty64 to tell Vagrant what kind of Linux virtual machine you would like to run.
+Type vagrant up to download and start running the virtual machine
+
+vagrant status — shows current status of virtual machine
+vagrant suspend — for saving and taking a break
+vagrant ssh — to connect and log into the virtual machine
+vagrant halt — more like shutting down, frees up ram, but slower than vagrant halt
+vagrant destroy — delete function
+
+going to cd /
+when you ls -al, you see a bunch of files here
+the etc file is important for modifying web and database servers
+the var file is for variable files you expect to change in size over time
+the bin file is where executable binaries are stored, accessible by all users, for running applications (e.g. - the ls command)
+sbin file is the same as bin, but only used by root user for system administration
+lib file is for libraries that support the bin filterItems
+usr is for user programs, difference between this and /bin is that this isn't used for boot up and sys maintenance processes
+
+echo $PATH to check all the shortcuts available
+for configuring your own $path: https://askubuntu.com/questions/60218/how-to-add-a-directory-to-the-path

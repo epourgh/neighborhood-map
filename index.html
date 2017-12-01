@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="css/styles.css">
+    <meta http-equiv="Content-Type" content="text/html; charset='UTF-8'">
+
+    <!-- viewport allows viewing the webpage's appearance on different platforms -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  </head>
+  <body>
+    <div class="container">
+
+      <!--  side content accompanying Google Maps -->
+      <div class="options-box">
+        <br>
+
+        <!-- header -->
+        <h1>
+          <img src="img/marker.png" class="mapMarker">
+          locations
+        </h1>
+        <div>
+
+          <!-- filter for media query widths > 800 px -->
+          <form data-bind="submit: filterItems">
+            <div class="filter">
+              <input data-bind='value: filteredItem, valueUpdate: "keydown"' placeholder="Filter options."/>
+              <button type="submit"><img src="img/filter.png" alt="filter" title="filter"></button>
+            </div>
+
+            <!--  dropdown for platforms with widths <= 800px-->
+            <div class="dropdown">
+              <span>
+                <div class="mobile-filter">
+                  <img src="img/hamburger.png" alt="show listing" title="show listing">
+                  <input data-bind='value: filteredItem, valueUpdate: "keydown"' placeholder="Filter options." />
+                  <button type="submit"><img src="img/filter.png" alt="filter" title="filter"></button>
+                </div>
+              </span>
+                <div class="dropdown-content">
+
+                  <!--  list from locations array -->
+                  <div>
+                    <ul data-bind="foreach: items">
+                      <li class= "highlight-list" data-bind="text: title, click: $parent.itemToMarker"></li>
+                    </ul>
+                  </div>
+
+                  <!-- remains invisible unless there's no items in the array -->
+                  <div data-bind='visible: resetFilter'>
+                    <h3>No filter results.</h3>
+                    <button class="refresh" data-bind="click: $root.refreshListings" title="reset filter" alt="reset filter">
+                      <img src="img/reset-filter.png">
+                    </button>
+                  </div>
+                </div>
+              </div>
+          </form>
+        </div>
+        </div>
+      </div>
+
+      <!--  Google Maps -->
+      <div id="map">
+
+        <!--  errorHandlers for both Google Maps and the wiki API-->
+        <div id='errorMessage' class='error-message'></div>
+      </div>
+    </div>
+  </body>
+  <script src="lib/jquery-3.2.1.min.js"></script>
+  <script src="lib/knockout-3.4.2.js"></script>
+
+  <!-- errorHandler inserted here -->
+  <script src="js/googleMapsAPI.js"></script>
+  <script async defer
+  src=
+  "https://maps.googleapis.com/maps/api/js?key=AIzaSyD5Ppf6iBwfPB6w6baG4sUSJAtIF4GMhQw&libraries=geometry&v=3&callback=initMap"
+  onerror="googleError()">
+  </script>
+</html>
