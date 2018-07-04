@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Address2LatLng</title>
+  </head>
+  <body>
+    <h1 id="address"></h1>
+    <h2 id="latLng"></h2>
+  </body>
+  <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyD5Ppf6iBwfPB6w6baG4sUSJAtIF4GMhQw&sensor=false"></script>
+  <script>
+    function codeAddress() {
+      var address = "H-E-B Grocery, Beechnut Street, Houston, TX";
+      document.getElementById("address").innerHTML = address;
+      var geocoder = new google.maps.Geocoder();
+      geocoder.geocode( { 'address': address}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          var loc=[];
+          loc[0]=results[0].geometry.location.lat();
+          loc[1]=results[0].geometry.location.lng()
+          document.getElementById("latLng").innerHTML = "lat: " + loc[0] + ", Lng: " + loc[1];
+        } else {
+          console.log("Error: " + status);
+        }
+      });
+    }
+
+    var myAddress = codeAddress();
+
+    /*
+    // Ceck if array
+    if(Array.isArray(myAddress)){
+      console.log("latitude", myAddress[0]);
+      console.log("longitude", myAddress[1]);
+
+    }*/
+  </script>
+
+
+  <footer>
+  </footer>
+</html>
