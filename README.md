@@ -1,6 +1,6 @@
-#### Author: ampourgh | Version: 2.0.0 | Last Modified: 9/17/2017
+#### Author: ampourgh | Version: 2.0.1 | Last Modified: 8/09/2018
 
-# Project 5 — Neighborhood Map
+# Neighborhood Map
 
 ## Getting Started
 
@@ -20,9 +20,9 @@ Along with:
 ### Installing
 1. Fork the catalog folder
 2. Copy the link of the fork
-3. In Git, use the clone command as so: git clone 
+3. In Git, use the clone command as so: git clone
 
-```git 
+```git
 <forked url> <folder name>
 ```
 
@@ -49,7 +49,7 @@ The project uses Knockout.js' MVVM model, with the model, view and view model. I
 Within js/googleMapsAPI.js, each marker property has a Wiki title which is based on what the Wikipedia's title is. Occasionally the title between the Wikipedia and the name of the location are the same, but there are times where the title and Wiki title are different, causing the AJAX  request not to return the Wiki content. Within the populateInfoWindow function, the Ajax request is made to retrieve the introductory information of the Wiki page and a link to the Wiki page.
 
 ### Marker Icon and Animation
-The marker's icon is set to be a colored dot instead of the standard marker icon that accompanies Google Maps. The marker has an animation when clicked that lasts for a short period of time. 
+The marker's icon is set to be a colored dot instead of the standard marker icon that accompanies Google Maps. The marker has an animation when clicked that lasts for a short period of time.
 
 ### Importing Map's Color Template
 Near the top of js/googleMapsAPI.js, there's a getJSON jquery request to import the the json style sheet for the use of the map's colors. This information is then sent to the styles property of the Maps variable.
