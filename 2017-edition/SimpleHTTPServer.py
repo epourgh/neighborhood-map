@@ -20,3 +20,6 @@ sys.stdout.flush()
 
 # Server runs forever
 httpd.serve_forever()
+
+# to serve, use command below
+# python3 -m http.server 
