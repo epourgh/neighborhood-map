@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="styles/main.css">
+        <title>Maps</title>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+        <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD5Ppf6iBwfPB6w6baG4sUSJAtIF4GMhQw&callback=initMap&libraries=&v=weekly"
+        defer
+        ></script>
+    </head>
+    <body>
+
+        <div class="options-box">
+            <br>
+            <h1>
+                <img src="img/marker.png" class="mapMarker">
+                locations
+            </h1>
+
+            <div class="filter">
+                <input id="filter" onkeyup="contentUpdate()" type="text">
+                <button type="submit"><img src="img/filter.png" alt="filter" title="filter"></button>
+            </div>
+
+            <div id="myDiv"></div>
+            
+            <p id='refresh' class='refresh-container' styles='text-align: center'>
+                <span>No filter results.</span>
+                <button onClick="refreshFilter()" class="refresh" title="reset filter" alt="reset filter">
+                    <img src="img/reset-filter.png">
+                </button>
+            </p>
+<!--  dropdown for platforms with widths <= 800px-->
+<div class="dropdown">
+    <span>
+        <div class="mobile-filter">
+            <img src="img/hamburger.png" alt="show listing" title="show listing">
+            <input data-bind='value: filteredItem, valueUpdate: "keydown"' placeholder="Filter options." />
+            <button type="submit"><img src="img/filter.png" alt="filter" title="filter"></button>
+        </div>
+    </span>
+    <div class="dropdown-content">
+
+        <!--  list from locations array -->
+        <div>
+            <ul data-bind="foreach: items">
+                <li class="highlight-list" data-bind="text: title, click: $parent.itemToMarker"></li>
+            </ul>
+        </div>
+
+        <!-- remains invisible unless there's no items in the array -->
+        <div data-bind='visible: resetFilter'>
+            <h3>No filter results.</h3>
+            <button class="refresh" data-bind="click: $root.refreshListings" title="reset filter" alt="reset filter">
+                <img src="img/reset-filter.png">
+            </button>
+        </div>
+    </div>
+</div>
+        </div>
+        <div id="map"></div>
+    
+
+    </body>
+    <script src="./js/init.js"></script>   
+    <script src="./js/main.js"></script>
+</html>
