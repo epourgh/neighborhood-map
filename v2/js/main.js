@@ -20,38 +20,32 @@ function populatesecondInfoWindow(marker, infowindow) {
         });
     }
 }
-
+// 
 function populateInfoWindow(marker, infowindow) {
     // Check to make sure the infowindow is not already opened on this marker.
     if (infowindow.marker != marker) {
         infowindow.marker = marker;
+        
+        async function getWiki() {
+            var url = `https://en.wikipedia.org/w/api.php`;
+            var headers = new Headers();
+            headers.append("Content-Type", "application/json; charset=utf-8");
+            let response = await fetch(`${url}?action=opensearch&search=${marker.wikiTitle}&callback=wikiCallback`, {
+                headers: headers,
+                method: "GET"
+            })
+            let data = await response.json();
+            return data;
+        }
 
-        // ajax request goes here
-        var url = `https://en.wikipedia.org/w/api.php?action=opensearch&search=${marker.wikiTitle}&format=json&callback=wikiCallback`;
+        getWiki().then(response => {
+                infowindow.setContent(`<div class="color-000"><b>${response[1]}</b></div><div class="color-000">${marker.address}</div><div class='color-000'><br>${response[2]} <a href="${response[3]}" target='_blank'><img src='images/external.gif' alt='to wikipedia' class='external-img'></img></a></div>`);
+            }).catch(err => {
+                console.log(err)
 
-        fetch(url).then(response => response.json()).then(function (response) {
-
-            console.log(response)
-
-            infowindow.setContent('<div class="color-000"><b>' + response[1] +
-                '</b></div>' + '<div class="color-000">' +
-                marker.address + '</div>' +
-                "<div class='color-000'><br>" + response[2] +
-                " " + "<a href=" + response[3] +
-                " target='_blank'>" +
-                "<img src='images/external.gif' alt='to wikipedia' class='external-img'></img>" +
-                "</a></div>");
-
-        }).catch(function (err) {
-            console.log(err)
-
-            infowindow.setContent('<div class="color-000"><b>' + marker.title +
-                '</b></div>' + '<div class="color-000">' +
-                marker.address + '</div>' +
-                "<div class='color-000'><br>" +
-                '\nCould not load Wikipedia content.</div>')
-        });
-
+                infowindow.setContent(`<div class="color-000"><b>${marker.title}</b></div><div class="color-000">${marker.address}</div><div class='color-000'><br>\nCould not load Wikipedia content.</div>`)
+            });
+        
         infowindow.open(map, marker);
         // Make sure the marker property is cleared if the infowindow is closed.
         infowindow.addListener('closeclick', function () {
