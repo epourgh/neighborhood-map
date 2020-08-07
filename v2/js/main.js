@@ -27,19 +27,24 @@ function populateInfoWindow(marker, infowindow) {
         infowindow.marker = marker;
         
         async function getWiki() {
-            var url = `https://en.wikipedia.org/w/api.php`;
+            var url = `./js/wiki-content.json`;
             var headers = new Headers();
-            headers.append("Content-Type", "application/json; charset=utf-8");
-            let response = await fetch(`${url}?action=opensearch&search=${marker.wikiTitle}&callback=wikiCallback`, {
+            
+            headers.append("Content-Type", "application/jsosn; charset=utf-8");
+            let response = await fetch(url, {
                 headers: headers,
                 method: "GET"
             })
+
             let data = await response.json();
             return data;
         }
 
         getWiki().then(response => {
-                infowindow.setContent(`<div class="color-000"><b>${response[1]}</b></div><div class="color-000">${marker.address}</div><div class='color-000'><br>${response[2]} <a href="${response[3]}" target='_blank'><img src='images/external.gif' alt='to wikipedia' class='external-img'></img></a></div>`);
+
+                let content = response.data;
+
+                infowindow.setContent(`<div class="color-000"><b>${content[1].content}</b></div><div class="color-000">${marker.address}</div><div class='color-000'><br>${content[2].content} <a href="${content[3].content}" target='_blank'><img src='images/external.gif' alt='to wikipedia' class='external-img'></img></a></div>`);
             }).catch(err => {
                 console.log(err)
 
