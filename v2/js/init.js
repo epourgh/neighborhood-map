@@ -62,7 +62,7 @@ function initMap() {
 
   function stylesContent() {
 
-      fetch('./contentStyle.json')
+      fetch('./js/contentStyle.json')
           .then(function (response) {
 
             var styles = response.stylesData;

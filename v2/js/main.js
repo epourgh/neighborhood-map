@@ -126,3 +126,14 @@ function refreshFilter() {
     document.getElementById('filter').value = '';
     contentUpdate()
 }
+
+
+function showChoices() {
+
+    console.log('hi')
+    let ddContainer = document.getElementById('dropdown-content');
+
+    console.log(ddContainer.style.opacity)
+
+    ddContainer.style.opacity = (ddContainer.style.opacity === '0' || ddContainer.style.opacity === '') ? '100' : '0';
+}
