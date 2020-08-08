@@ -1,7 +1,30 @@
 "use strict";
 
-var markers = [];
-var list = [];
+let markers = [];
+let stylesDay = [];
+let stylesNight = [];
+
+// localStorage.setItem("mapOptions", JSON.stringify(mapOptions));
+
+let mapOptions = (function() {
+    if (localStorage.getItem("mapOptions") !== null) {
+        console.log('EXISTS');
+        return localStorage.getItem("mapOptions");
+
+    } else {
+        console.log('!EXISTS');
+        localStorage.setItem("mapOptions", 'stylesnight');
+        return 'stylesnight';
+        // localStorage.setItem("mapOptions", JSON.stringify(mapOptions));
+    }
+})();
+
+mapOptions = mapOptions.toLowerCase().toString();
+
+const templateMode = document.getElementById('template-mode');
+templateMode.innerHTML = (mapOptions == '"stylesnight"') ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+
+let list = [];
 let map;
 
 function initMap() {
@@ -9,11 +32,37 @@ function initMap() {
   function stylesContent() {
     Promise.all([
             fetch("./js/json/locations.json").then(value => value.json()),
-            fetch("./js/json/content-style.json").then(value => value.json())
+            fetch("./js/json/content-style-day.json").then(value => value.json()),
+            fetch("./js/json/content-style-night.json").then(value => value.json())
         ]).then(function (response) {
 
-            var styles = response[1].stylesData;
             var locations = response[0].locations;
+            stylesDay = response[1];
+            stylesNight = response[2].stylesData;
+            let stylesComparison = '"stylesnight"'.toLowerCase().toString()
+
+
+            console.log(mapOptions)
+            console.log(stylesComparison)
+
+            let mapStyleSettings = (mapOptions == stylesComparison) ? stylesNight : stylesDay;
+            let iconStyleSettings = (function() {
+                if (mapOptions == stylesComparison) {
+                    return ({
+                        regFillColor: 'rgb(0, 255, 255)',
+                        highlightFillColor: '#fff'
+                    })
+                
+                } else {
+                    return ({
+                        regFillColor: 'rgb(75, 75, 75)',
+                        highlightFillColor: '#000'
+                    })
+                }
+            })()
+            
+            console.log(iconStyleSettings);
+
 
             // added max width to the info window for Wikipedia content
             var largeInfowindow = new google.maps.InfoWindow({
@@ -26,8 +75,8 @@ function initMap() {
                 path: google.maps.SymbolPath.CIRCLE,
                 scale: 5,
                 fillOpacity: 1,
-                fillColor: 'rgb(0, 255, 255)',
-                strokeColor: 'rgb(0, 255, 255)',
+                fillColor: iconStyleSettings.regFillColor,
+                strokeColor: iconStyleSettings.regFillColor,
             };
 
             // Create a "highlighted location" marker color for when the user
@@ -36,8 +85,8 @@ function initMap() {
                 path: google.maps.SymbolPath.CIRCLE,
                 scale: 7,
                 fillOpacity: 1,
-                fillColor: '#fff',
-                strokeColor: '#fff',
+                fillColor: iconStyleSettings.highlightFillColor,
+                strokeColor: iconStyleSettings.highlightFillColor,
             };
 
             const myDiv = document.getElementById("myDiv");
@@ -125,14 +174,14 @@ function initMap() {
                     lng: -95.38426199999999
                 },
                 zoom: 10,
-                styles: styles,
+                styles: mapStyleSettings,
                 mapTypeControl: false,
                 fullscreenControl: true,
                 fullscreenControlOptions: {
                     position: google.maps.ControlPosition.LEFT_BOTTOM
                 },
             });
-
+            
             // This function will loop through the markers array and display them all.
             function showListings() {
                 var bounds = new google.maps.LatLngBounds();
@@ -145,6 +194,10 @@ function initMap() {
             }
 
             showListings();
+
+            console.log(stylesNight)
+            console.log(stylesDay)
+            // map.styles = stylesDay; 
 
         }).catch(function (err) {
             document.getElementById('errorMessage').innerHTML += "Error loading the Map's stylesheet.";

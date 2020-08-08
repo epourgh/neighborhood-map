@@ -130,3 +130,12 @@ function showChoices() {
     let ddContainer = document.getElementById('dropdown-content');
     ddContainer.style.opacity = (ddContainer.style.opacity === '0' || ddContainer.style.opacity === '') ? '100' : '0';
 }
+
+function changeAppearance() {
+
+    mapOptions = (mapOptions == '"stylesnight"') ? 'stylesday' : 'stylesnight';
+
+    localStorage.setItem("mapOptions", JSON.stringify(mapOptions));
+    location.reload();
+    
+}
