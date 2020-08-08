@@ -24,6 +24,16 @@ mapOptions = mapOptions.toLowerCase().toString();
 const templateMode = document.getElementById('template-mode');
 templateMode.innerHTML = (mapOptions == '"stylesnight"') ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
 
+let optionsBox = document.getElementById('options-box').style;
+optionsBox.background = (mapOptions == '"stylesnight"') ? '#000' : '#fff;';
+optionsBox.color = (mapOptions == '"stylesnight"') ? '#fff' : '#000;';
+
+let dropdownContent = document.getElementById('dropdown-content').style;
+dropdownContent.background = (mapOptions == '"stylesnight"') ? 'linear-gradient(rgba(0, 0, 0, 1.0), rgba(0, 0, 0, 0.5))' : 'linear-gradient(rgba(260, 260, 260, 1.0), rgba(260, 260, 260, 0.2))';
+
+console.log('optionsBox.background');
+console.log(optionsBox.background);
+
 let list = [];
 let map;
 
@@ -40,10 +50,6 @@ function initMap() {
             stylesDay = response[1];
             stylesNight = response[2].stylesData;
             let stylesComparison = '"stylesnight"'.toLowerCase().toString()
-
-
-            console.log(mapOptions)
-            console.log(stylesComparison)
 
             let mapStyleSettings = (mapOptions == stylesComparison) ? stylesNight : stylesDay;
             let iconStyleSettings = (function() {

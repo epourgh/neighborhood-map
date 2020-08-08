@@ -12,22 +12,24 @@
     </head>
     <body>
 
-        <div class="options-box">
+        <div id="options-box" class="options-box">
 
-            <a href="#" onclick="changeAppearance()" class="icon-mode-style"><span id='template-mode'></span></a>
+            <span onclick="changeAppearance()" class="icon-mode-style" id='template-mode'></span>
             <br>
             
             <h1>
-                <img src="img/marker.png" class="mapMarker">
+                <i class="fas fa-map-marker-alt"></i>
                 locations
             </h1>
 
             <div class="filter">
-                <button type="submit"><img src="img/hamburger.png" onclick="showChoices()" alt="show listing"
+                
+                    <!-- <img src="img/hamburger.png" alt="show listing"
                         title="show listing"
-                        class="mobile-hamburger"></button>
+                        class="mobile-hamburger"> -->
+                    <i onclick="showChoices()" class="fas fa-bars mobile-hamburger"></i>
                 <input id="filter" class="filter-input" onkeyup="contentUpdate()" type="text">
-                <button type="submit"><img src="img/filter.png" alt="filter" title="filter"></button>
+                <span><i class="fas fa-search"></i></span>
             </div>
 
             <div id="dropdown-content">
@@ -35,9 +37,9 @@
                 <p id='refresh' class='refresh-container' styles='text-align: center'>
                     No filter results.
                     <br><br>
-                    <button onClick="refreshFilter()" class="refresh" title="reset filter" alt="reset filter">
-                        <img src="img/reset-filter.png">
-                    </button>
+                    <span class="refresh" style="padding: 20%; text-align: center">
+                        <i onClick="refreshFilter()" class="fas fa-redo-alt fa-3x"></i>
+                    </span>
                 </p>
             </div>
             
