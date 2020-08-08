@@ -22,12 +22,13 @@ function populatesecondInfoWindow(marker, infowindow) {
 }
 // 
 function populateInfoWindow(marker, infowindow) {
+    
     // Check to make sure the infowindow is not already opened on this marker.
     if (infowindow.marker != marker) {
         infowindow.marker = marker;
         
         async function getWiki() {
-            var url = `./js/wiki-content.json`;
+            var url = `./js/json/wiki-content.json`;
             var headers = new Headers();
             
             headers.append("Content-Type", "application/jsosn; charset=utf-8");
@@ -42,9 +43,9 @@ function populateInfoWindow(marker, infowindow) {
 
         getWiki().then(response => {
 
-                let content = response.data;
+                let content = response[marker.wikiTitle];
 
-                infowindow.setContent(`<div class="color-000"><b>${content[1].content}</b></div><div class="color-000">${marker.address}</div><div class='color-000'><br>${content[2].content} <a href="${content[3].content}" target='_blank'><img src='images/external.gif' alt='to wikipedia' class='external-img'></img></a></div>`);
+                infowindow.setContent(`<div class="color-000"><b>${content[1].content}</b></div><div class="color-000">${marker.address}</div><div class='color-000'><br>${content[2].content} <a href="${content[3].content}" target='_blank'><img src='img/external.gif' alt='to wikipedia' class='external-img'></img></a></div>`);
             }).catch(err => {
                 console.log(err)
 
@@ -91,8 +92,6 @@ function contentUpdate() {
 
     } else {
 
-        
-
         for (let i = children.length - 1; i >= 0; i--) {
 
             if (markers[i].title.toLowerCase().indexOf(searchTerm) > -1) {
@@ -128,11 +127,6 @@ function refreshFilter() {
 
 
 function showChoices() {
-
-    console.log('hi')
     let ddContainer = document.getElementById('dropdown-content');
-
-    console.log(ddContainer.style.opacity)
-
     ddContainer.style.opacity = (ddContainer.style.opacity === '0' || ddContainer.style.opacity === '') ? '100' : '0';
 }

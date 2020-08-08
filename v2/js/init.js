@@ -8,8 +8,8 @@ function initMap() {
 
   function stylesContent() {
     Promise.all([
-            fetch("./js/locations.json").then(value => value.json()),
-            fetch("./js/content-style.json").then(value => value.json())
+            fetch("./js/json/locations.json").then(value => value.json()),
+            fetch("./js/json/content-style.json").then(value => value.json())
         ]).then(function (response) {
 
             var styles = response[1].stylesData;
@@ -24,17 +24,17 @@ function initMap() {
             // Style the markers a bit. This will be our listing marker icon.
             var iconSymbol = {
                 path: google.maps.SymbolPath.CIRCLE,
-                scale: 3,
+                scale: 5,
                 fillOpacity: 1,
-                fillColor: '#0FF',
-                strokeColor: '#0FF',
+                fillColor: 'rgb(0, 255, 255)',
+                strokeColor: 'rgb(0, 255, 255)',
             };
 
             // Create a "highlighted location" marker color for when the user
             // mouses over the marker.
             var iconSymbolHighlighted = {
                 path: google.maps.SymbolPath.CIRCLE,
-                scale: 3,
+                scale: 7,
                 fillOpacity: 1,
                 fillColor: '#fff',
                 strokeColor: '#fff',
