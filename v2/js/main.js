@@ -45,7 +45,7 @@ function populateInfoWindow(marker, infowindow) {
 
                 let content = response[marker.wikiTitle];
 
-                infowindow.setContent(`<div class="color-000"><b>${content[1].content}</b></div><div class="color-000">${marker.address}</div><div class='color-000'><br>${content[2].content} <a href="${content[3].content}" target='_blank'><img src='img/external.gif' alt='to wikipedia' class='external-img'></img></a></div>`);
+                infowindow.setContent(`<div class="color-000"><b>${content[1].content}</b></div><div class="color-000">${marker.address}</div><div class='color-000'><br>${content[2].content} <a href="${content[3].content}" target='_blank'><p><a class='rightSideClick' onclick='rightSide()'>open</a></p><img src='img/external.gif' alt='to wikipedia' class='external-img'></img></a></div>`);
             }).catch(err => {
                 console.log(err)
 
@@ -138,4 +138,21 @@ function changeAppearance() {
     localStorage.setItem("mapOptions", JSON.stringify(mapOptions));
     location.reload();
     
+}
+
+function rightSide() {
+
+    console.log('rights')
+    let rightSide = document.getElementById('right-side-info');
+
+    rightSide.style.display = 'block';
+    
+}
+
+function rightSideExit() {
+
+    let rightSide = document.getElementById('right-side-info');
+
+    rightSide.style.display = 'none';
+
 }

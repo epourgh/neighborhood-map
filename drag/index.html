@@ -1,0 +1,94 @@
+<html>
+
+<head>
+    <style>
+        #right-side-info {
+            display: none;
+            z-index: 5;
+            border-radius: 5px;
+            width: 40vw;
+            height: 75vh;
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            background: #fff;
+            -webkit-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.5);
+            -moz-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.5);
+            box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.5);
+        }
+        
+        #right-side-info .exit {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+
+        .left-side-nav {
+            background: #fff;
+            height: 100vh;
+            width: 20vw;
+            position: absolute;
+            top: 0;
+            left: 0;
+            -webkit-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.5);
+            -moz-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.5);
+            box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js"></script>
+
+</head>
+<body>
+    <div class="left-side-nav">
+        <a href="#" onclick="show()">show</a>
+    </div>
+    <div id="right-side-info">
+        <span class="exit" onclick="rightSideExit()"><i class="fas fa-times"></i></span>
+    </div>
+</body>
+
+
+<script language="javascript">
+    var mousePosition;
+    var offset = [0, 0];
+    let div;
+    var isDown = false;
+
+    div = document.getElementById("right-side-info");
+
+    div.addEventListener('mousedown', function (e) {
+        isDown = true;
+        offset = [
+            div.offsetLeft - e.clientX,
+            div.offsetTop - e.clientY
+        ];
+    }, true);
+
+    document.addEventListener('mouseup', function () {
+        isDown = false;
+    }, true);
+
+    document.addEventListener('mousemove', function (event) {
+        event.preventDefault();
+        if (isDown) {
+            mousePosition = {
+
+                x: event.clientX,
+                y: event.clientY
+
+            };
+            div.style.left = (mousePosition.x + offset[0]) + 'px';
+            div.style.top = (mousePosition.y + offset[1]) + 'px';
+        }
+    }, true);
+
+    function show() {
+        div = document.getElementById("right-side-info");
+        div.style.display = 'block';
+    }
+    function rightSideExit() {
+                div = document.getElementById("right-side-info");
+                div.style.display = 'none';
+    }
+</script>
