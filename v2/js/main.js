@@ -44,7 +44,8 @@ function populateInfoWindow(marker, infowindow) {
         getWiki().then(response => {
 
                 let content = response[marker.wikiTitle];
-                const description = content[2].content;
+                const description = content[2].content.replace(/'/g, "\\'");
+                
 
                 console.log(description)
 
