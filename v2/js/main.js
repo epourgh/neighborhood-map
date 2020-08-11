@@ -44,8 +44,14 @@ function populateInfoWindow(marker, infowindow) {
         getWiki().then(response => {
 
                 let content = response[marker.wikiTitle];
+                const description = content[2].content;
 
-                infowindow.setContent(`<div class="color-000"><b>${content[1].content}</b></div><div class="color-000">${marker.address}</div><div class='color-000'><br>${content[2].content} <a href="${content[3].content}" target='_blank'><p><a class='rightSideClick' onclick='rightSide()'>open</a></p><img src='img/external.gif' alt='to wikipedia' class='external-img'></img></a></div>`);
+                console.log(description)
+
+                console.log(marker)
+
+
+                infowindow.setContent(`<div class="color-000"><b>${content[1].content}</b></div><div class="color-000">${marker.address}</div><div class='color-000'><br>${content[2].content} <a href="${content[3].content}" target='_blank'><p><a class='rightSideClick' onclick="rightSide('${marker.id}', '${description}')">open</a></p><img src='img/external.gif' alt='to wikipedia' class='external-img'></img></a></div>`);
             }).catch(err => {
                 console.log(err)
 
@@ -140,18 +146,22 @@ function changeAppearance() {
     
 }
 
-function rightSide() {
+function rightSide(markerId, description) {
 
     console.log('rights')
-    let rightSide = document.getElementById('right-side-info');
+    let rightSide = document.getElementById('right-side-content-box');
+    let rightSideContent = document.getElementById('right-side-content');
 
     rightSide.style.display = 'block';
+    rightSideContent.innerHTML = `<h1>${markers[markerId].title}</h1><br><p><i class="fas fa-map-pin"></i>&nbsp;
+ ${markers[markerId].address}</p><p><i class="fas fa-map-marked-alt"></i>&nbsp; ${markers[markerId].position}</p><br><p>${description}</p>`;
+    
     
 }
 
 function rightSideExit() {
 
-    let rightSide = document.getElementById('right-side-info');
+    let rightSide = document.getElementById('right-side-content-box');
 
     rightSide.style.display = 'none';
 

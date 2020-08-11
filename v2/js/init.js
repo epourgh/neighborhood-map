@@ -113,6 +113,7 @@ function initMap() {
                 // Create a marker per location, and put into markers array.
                 var marker = new google.maps.Marker({
                     map,
+                    id: id,
                     position: position,
                     positionLng: positionLat,
                     positionLat: positionLng,
