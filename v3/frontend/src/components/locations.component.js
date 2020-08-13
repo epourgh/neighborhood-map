@@ -1,64 +1,134 @@
-import React, { useState, useEffect } from 'react';
+import React, {Component} from 'react';
+import { Map, GoogleApiWrapper } from 'google-maps-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMoon, faSun, faSearch, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
 
 import axios from 'axios';
+let stylesDay = require('../json/content-style-day.json');
+let stylesNight = require('../json/content-style-night.json');
 
 
-const Location = props => {
+const Mode = props => (props.mode === 'day')?<FontAwesomeIcon icon={faSun} />:<FontAwesomeIcon icon={faMoon} />;
+const FilterBoolean = props => (props.boolean === true)? '':'empty';
 
-    return (
-        <p>
-            <FontAwesomeIcon icon={faMoon} />
-            <FontAwesomeIcon icon={faSun} />
-            {props.location.title}
-        </p>
-    )
-}
+export default class Locations extends Component {
 
-export default function Locations() {
-    const [locations, setLocations] = useState([]);
-    const [mode, setMode] = useState('night');
-
-    useEffect(() => {
-        axios.get('http://localhost:5000/locations/')
-            .then(response => {
-                setLocations(response.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-    }, []);
-
-    const idvalue = '5e640fd46ebda9d56c1bc79b';
-
-    const locationList = () => {
-        return locations.map(location => {
-            return <Location location={location} setLocations={setLocations} locations={locations} key={location._id} />;
-        })
+    constructor(props) {
+        super(props);
+        this.handleChange = this.handleChange.bind(this);
+        this.state = {
+            locations: [],
+            filter:[],
+            filterBoolean: true, 
+            mode: 'night',
+            markers: []
+        }
     }
-    const changeAppearance = () => {
-        let changedMode = (mode == 'night')?'day':'night';
-        setMode(changedMode)
+    
+    componentDidMount() {
+       axios.get('http://localhost:5000/locations/')
+           .then(response => {
+                // this.state.Locations(response.data);
+               this.setState({
+                   locations: response.data,
+                   filter: response.data
+               })
+           })
+           .catch((error) => {
+               console.log(error);
+           })
     }
 
-    return (
-        <div id="options-box" className="options-box">
-            <span onClick={() => changeAppearance()} class="icon-mode-style" id='template-mode'>{mode} mode</span>
-            <br />
-            <h1>
-                <FontAwesomeIcon icon={faMapMarkerAlt} />
-                locations
-            </h1>
+    handleChange (e) {
+        let modeChange = (this.state.mode === 'night') ? 'day' : 'night';
+        this.setState({ mode: modeChange });
+    }
+    
 
-            <div className="filter">
-                <i onclick="showChoices()" className="fas fa-bars mobile-hamburger"></i>
-                <input id="filter" className="filter-input" onkeyup="contentUpdate()" type="text" /> 
 
-                <span><FontAwesomeIcon icon={faSearch} /></span>
-            </div>
-            {locationList()}
-        </div>
-    )
+    showChoices = () => {
+        console.log(this.state.locations)
+    }
+
+    contentUpdate = e => {
+        let searchTerm = e.target.value;
+        let filtering = []
+        let count = 0;
+
+        if (searchTerm === '') {
+
+            count = 9999;
+
+            this.setState({
+                filter: this.state.locations,
+                filterBoolean: true
+            })
+
+            console.log('show all')
+        } else {
+
+            for (let i = this.state.locations.length - 1; i >= 0; i--) {
+
+                if (this.state.locations[i].title.toLowerCase().indexOf(searchTerm) > -1) {
+
+                    filtering.push(this.state.locations[i]);
+                    count += 1;
+
+                }
+
+            }
+
+            this.setState({
+                filter: filtering,
+                filterBoolean: true
+            })
+
+            if (count === 0) {
+                this.setState({
+                    filterBoolean: false
+                })
+            }
+        }
+    }
+
+    render() {
+        return (
+            <>
+                <div id="options-box" className="options-box">
+
+                    <span onClick={() => this.handleChange()} className="icon-mode-style">
+                        <Mode mode={this.state.mode} />
+                    </span>
+
+                    <br />
+                    <h1>
+                        <FontAwesomeIcon icon={faMapMarkerAlt} />
+                        locations
+                    </h1>
+
+                    <div className="filter">
+                        <i onClick={this.showChoices} className="fas fa-bars mobile-hamburger"></i>
+                        <input type="text" className="filter-input" onKeyUp={this.contentUpdate} type="text" /> 
+
+                        <span><FontAwesomeIcon icon={faSearch} /></span>
+                    </div>
+
+                    <FilterBoolean boolean={this.state.filterBoolean} />
+
+                    {
+                        this.state.filter.map(location => {
+                            return (
+                                <p key={location._id}>
+                                    {location.title}
+                                </p>
+                            )
+                        })
+                    }
+
+                </div>
+
+            </>
+        )
+    }
 
 }
