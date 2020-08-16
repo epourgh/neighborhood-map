@@ -152,9 +152,8 @@ function initMap() {
 
 
             }
-
+            
             function markerListener(id) {
-
                 let marker = markers[id];
 
                 // Create an onclick event to open the large infowindow at each marker.
