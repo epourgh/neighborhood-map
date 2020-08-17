@@ -8,7 +8,22 @@ import axios from 'axios';
 let stylesDay = require('../json/content-style-day.json');
 let stylesNight = require('../json/content-style-night.json');
 
-const Mode = props => (props.mode === 'day')?<FontAwesomeIcon icon={faSun} />:<FontAwesomeIcon icon={faMoon} />;
+let mapOptions = (function () {
+    if (localStorage.getItem("mapOptions") !== null) {
+        console.log('EXISTS');
+        return localStorage.getItem("mapOptions");
+
+    } else {
+        console.log('!EXISTS');
+        localStorage.setItem("mapOptions", 'stylesnight');
+        return 'stylesnight';
+        // localStorage.setItem("mapOptions", JSON.stringify(mapOptions));
+    }
+})();
+
+const ModeMapBg = (mapOptions === '"stylesday"')?stylesDay:stylesNight;
+let ModeSideBg = (mapOptions === '"stylesday"') ? `options-box stylesday` : `options-box stylesnight`;
+const Mode = props => (props.mode === '"stylesday"') ? < FontAwesomeIcon icon = {faSun}/>:<FontAwesomeIcon icon={faMoon}/> ;
 const FilterBoolean = props => (props.boolean === true)? '':'empty';
 
 export class Locations extends Component {
@@ -21,14 +36,13 @@ export class Locations extends Component {
             markerObjects: [],
             markers: [],
             filterBoolean: true, 
-            mode: 'night',
+            mode: mapOptions,
             activeMarker: {},
             selectedPlace: {},
             showingInfoWindow: false
         }
         this.handleChange = this.handleChange.bind(this);
         this.onMarkerMounted = element => {
-
             this.setState(prevState => ({
                 markerObjects: [...prevState.markerObjects, element]
             }))
@@ -176,14 +190,22 @@ export class Locations extends Component {
         }
 
         return newLocations;
+        
+    }
+
+    changeMode = () => {
+        mapOptions = (mapOptions == '"stylesnight"') ? 'stylesday' : 'stylesnight';
+
+        localStorage.setItem("mapOptions", JSON.stringify(mapOptions));
+        window.location.reload();
     }
 
     render() {
         return (
             <>
-                <div id="options-box" className="options-box">
+                <div id="options-box" className={ModeSideBg}>
 
-                    <span onClick={() => this.handleChange()} className="icon-mode-style">
+                    <span onClick={() => this.changeMode()} className="icon-mode-style">
                         <Mode mode={this.state.mode} />
                     </span>
 
@@ -208,7 +230,7 @@ export class Locations extends Component {
                 <Map
                     google={this.props.google}
                     zoom={10}
-                    styles={stylesDay}
+                    styles={ModeMapBg}
                     initialCenter = {
                         {
                             lat: 29.496698,
