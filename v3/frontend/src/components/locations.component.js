@@ -58,7 +58,7 @@ export class Locations extends Component {
                })
 
                let filtering = [];
-                for (let i = response.data.length - 1; i >= 0; i--) {
+                for (let i = 0; i < response.data.length; i++) {
                     filtering.push({
                         id: i,
                         content: this.state.locations[i]
@@ -123,6 +123,10 @@ export class Locations extends Component {
                 filterBoolean: true
             })
 
+            if (count === 1) {
+                this.onMarkerClick(this.state.markerObjects[this.state.filter[0].id].props, this.state.markerObjects[this.state.filter[0].id].marker)
+            }
+
             if (count === 0) {
                 this.setState({
                     filterBoolean: false
@@ -132,8 +136,6 @@ export class Locations extends Component {
     }
 
     onMarkerClick = (props, marker) => {
-        console.log(props);
-        console.log(marker)
         console.log(window.parent.google.maps.Marker)
         this.setState({
             selectedPlace: props.value,
@@ -142,28 +144,22 @@ export class Locations extends Component {
         })
     }
 
-    onMarkerClickTwo = () => {
-        console.log('activerMarker')
-        console.log(this.state.activeMarker);
-
-    }
-
 
     displayMarkers = () => {
 
         let markersJsx = []
         
-        this.state.locations.forEach(location => {
+        this.state.filter.forEach(location => {
             markersJsx.push(<Marker 
                         ref={this.onMarkerMounted}
-                        key={location._id}
-                        id={location._id} 
-                        value={location}
+                        key={location.content._id}
+                        id={location.content._id} 
+                        value={location.content}
                         icon={"http://maps.google.com/mapfiles/ms/icons/blue.png"}
                         position = {
                                 {
-                                    lat: location.coordinates.lat,
-                                    lng: location.coordinates.lng
+                                    lat: location.content.coordinates.lat,
+                                    lng: location.content.coordinates.lng
                                 }
                             }
                             onClick={this.onMarkerClick}
