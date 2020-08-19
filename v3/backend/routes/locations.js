@@ -1,11 +1,49 @@
 const router = require('express').Router();
-let Locations = require('../models/locations.model');
+const fetch = require("node-fetch");
+let wikiTitles = require('../wikiTitles');
+Locations = require('../models/locations.model');
+
 
 router.route('/').get((req, res) => {
+
     Locations.find()
-        .then(exercises => res.json(exercises))
+        .then(locationList => res.json(locationList))
         .catch(err => res.status(400).json('Error: ' + err));
 });
+
+router.get('/wiki', function (req, res) {
+    var wikiApi = 'https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&explaintext=1';
+    let array = [];
+
+    for (let i = 0; i < wikiTitles.length; i++) {
+        array.push(fetch(`${wikiApi}&titles=${wikiTitles[i].title}`).then(value => value.json()))
+    }
+
+    Promise.all(array).then(function (data) {
+
+        const regex = /.*?(\.)(?=\s[A-Z])/;
+        let secondArray = {};
+        let pageid;
+        let page;
+        let m;
+
+        for (let i = 0; i < wikiTitles.length; i++) {
+            pageid = Object.keys(data[i].query.pages)[0];
+            page = data[i].query.pages[pageid].extract;
+
+            if ((m = regex.exec(page)) !== null) {
+                secondArray[wikiTitles[i]._id] = m[0];
+            }
+
+        }
+
+        console.log(secondArray)
+        res.send(secondArray);
+
+    }).catch(function (err) {
+        console.log('Fetch Error.', err);
+    });
+})
 
 router.route('/add').post((req, res) => {
 

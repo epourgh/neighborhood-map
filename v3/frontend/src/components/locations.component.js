@@ -23,8 +23,9 @@ let mapOptions = (function () {
 
 const ModeMapBg = (mapOptions === '"stylesday"')?stylesDay:stylesNight;
 let ModeSideBg = (mapOptions === '"stylesday"') ? `options-box stylesday` : `options-box stylesnight`;
-const Mode = props => (props.mode === '"stylesday"') ? < FontAwesomeIcon icon = {faSun}/>:<FontAwesomeIcon icon={faMoon}/> ;
+const Mode = props => (props.mode === '"stylesday"') ? < FontAwesomeIcon icon = {faSun}/>:<FontAwesomeIcon icon={faMoon}/>;
 const FilterBoolean = props => (props.boolean === true)? '':'empty';
+
 
 export class Locations extends Component {
 
@@ -39,7 +40,8 @@ export class Locations extends Component {
             mode: mapOptions,
             activeMarker: {},
             selectedPlace: {},
-            showingInfoWindow: false
+            showingInfoWindow: false,
+            wiki: ''
         }
         this.handleChange = this.handleChange.bind(this);
         this.onMarkerMounted = element => {
@@ -73,6 +75,16 @@ export class Locations extends Component {
            .catch((error) => {
                console.log(error);
            })
+
+       axios.get('http://localhost:5000/locations/wiki/')
+            .then(response => {
+                   console.log(response.data);
+                   this.setState({
+                       wiki: response.data
+                   })
+            }).catch((error) => {
+                console.log(error);
+            })
     }
 
     handleChange (e) {
@@ -137,6 +149,7 @@ export class Locations extends Component {
 
     onMarkerClick = (props, marker) => {
         console.log(window.parent.google.maps.Marker)
+        console.log(props)
         this.setState({
             selectedPlace: props.value,
             activeMarker: marker,
@@ -220,7 +233,9 @@ export class Locations extends Component {
                     </div>
 
                     <FilterBoolean boolean={this.state.filterBoolean} />
-                    {this.displayLinks()}
+                    <div className="myDiv">
+                        {this.displayLinks()}
+                    </div>
 
                 </div>
                 <Map
@@ -253,6 +268,7 @@ export class Locations extends Component {
                         <div>
                             <h1>{this.state.selectedPlace.title}</h1>
                             <p>{this.state.selectedPlace.address}</p>
+                            <p>{this.state.wiki[this.state.selectedPlace._id]}</p>
                         </div>
                     </InfoWindowEx>
                 </Map>

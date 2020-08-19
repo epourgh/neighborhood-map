@@ -26,8 +26,9 @@ body {
   visibility: hidden;
 }
 
-#myDiv a {
-  display: block
+.myDiv a {
+  display: block;
+  padding-left: 30px;
 }
 
 .options-box {
