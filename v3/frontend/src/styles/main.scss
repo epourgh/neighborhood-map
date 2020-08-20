@@ -108,11 +108,12 @@ hr {
 }
 
 .map {
-  bottom: 0px;
-  height: 100%;
-  left: 282px;
-  position: absolute;
-  right: 0px;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    left: 20vw;
+    height: 100vh !important;
+    width: 80vw !important;
 }
 
 .marker {
@@ -163,7 +164,7 @@ hr {
 }
 
 .stylesnight {
-  background-color: #000;
+  background-color: #151c25;
   color: #fff;
 }
 

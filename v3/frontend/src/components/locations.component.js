@@ -24,7 +24,15 @@ let mapOptions = (function () {
 const ModeMapBg = (mapOptions === '"stylesday"')?stylesDay:stylesNight;
 let ModeSideBg = (mapOptions === '"stylesday"') ? `options-box stylesday` : `options-box stylesnight`;
 const Mode = props => (props.mode === '"stylesday"') ? < FontAwesomeIcon icon = {faSun}/>:<FontAwesomeIcon icon={faMoon}/>;
-const FilterBoolean = props => (props.boolean === true)? '':'empty';
+const FilterBoolean = props => {
+    if (props.boolean === false) {
+        return (
+            <p>empty</p>
+        );
+    } else {
+        return <></>;
+    }
+}
 
 
 export class Locations extends Component {
@@ -150,6 +158,19 @@ export class Locations extends Component {
     onMarkerClick = (props, marker) => {
         console.log(window.parent.google.maps.Marker)
         console.log(props)
+
+        marker.icon.scaledSize = {
+            width: 50,
+            height: 50
+        }
+        marker.icon.size = {
+            width: 50,
+            height: 50
+        }
+        
+        console.log(marker.icon)
+        // this.props.google.maps.Size(15, 15)
+
         this.setState({
             selectedPlace: props.value,
             activeMarker: marker,
@@ -160,6 +181,19 @@ export class Locations extends Component {
 
     displayMarkers = () => {
 
+        const markerIcon = (mapOptions === '"stylesday"') ? "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Location_dot_black.svg/1024px-Location_dot_black.svg.png" : "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Location_dot_cyan.svg/1200px-Location_dot_cyan.svg.png";
+
+        
+        
+
+        const iconMarker = new window.google.maps.MarkerImage(
+            markerIcon,
+            null, /* size is determined at runtime */
+            null, /* origin is 0,0 */
+            new this.props.google.maps.Point(32, 32), /* anchor is bottom center of the scaled image */
+            new this.props.google.maps.Size(15, 15)
+        );
+
         let markersJsx = []
         
         this.state.filter.forEach(location => {
@@ -168,7 +202,7 @@ export class Locations extends Component {
                         key={location.content._id}
                         id={location.content._id} 
                         value={location.content}
-                        icon={"http://maps.google.com/mapfiles/ms/icons/blue.png"}
+                        icon = {iconMarker}
                         position = {
                                 {
                                     lat: location.content.coordinates.lat,
@@ -242,6 +276,7 @@ export class Locations extends Component {
                     google={this.props.google}
                     zoom={10}
                     styles={ModeMapBg}
+                    className="map"
                     initialCenter = {
                         {
                             lat: 29.496698,
@@ -260,7 +295,6 @@ export class Locations extends Component {
                             lng: -95.38426199999999
                         }
                     }
-                    className="map"
                     >
                     {this.displayMarkers()}
 
