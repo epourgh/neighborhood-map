@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMoon, faSun, faSearch, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
+import { faMoon, faSun, faSearch, faMapMarkerAlt, faBars} from '@fortawesome/free-solid-svg-icons'
 import InfoWindowEx from './infoWindowEx'
 
 import axios from 'axios';
@@ -49,7 +49,9 @@ export class Locations extends Component {
             activeMarker: {},
             selectedPlace: {},
             showingInfoWindow: false,
-            wiki: ''
+            wiki: '',
+            dropdownContent: 'dropdown-content-1',
+            dropdownClasses: ''
         }
         this.handleChange = this.handleChange.bind(this);
         this.onMarkerMounted = element => {
@@ -60,6 +62,14 @@ export class Locations extends Component {
     }
     
     componentDidMount() {
+
+        let dropdownBg = (this.state.mode === 'night') ? 'dropdown-bg-night' : 'dropdown-bg-day';
+
+        this.setState({
+            dropdownClasses: `${this.state.dropdownContent} ${dropdownBg}`
+        });
+
+
        axios.get('http://localhost:5000/locations/')
            .then(response => {
                 // this.state.Locations(response.data);
@@ -103,7 +113,14 @@ export class Locations extends Component {
 
 
     showChoices = () => {
-        console.log(this.state.locations)
+        let dropdownContent = (this.state.dropdownContent === 'dropdown-content-1')?'dropdown-content-2':'dropdown-content-1';
+
+        let dropdownBg = (this.state.mode === 'night') ? 'dropdown-bg-night' : 'dropdown-bg-day';
+
+        this.setState({
+            dropdownContent,
+            dropdownClasses: `${dropdownContent} ${dropdownBg}`
+        });
     }
 
     contentUpdate = e => {
@@ -259,7 +276,8 @@ export class Locations extends Component {
                     </h1>
 
                     <div className="filter">
-                        <i onClick={this.showChoices} className="fas fa-bars mobile-hamburger"></i>
+
+                        <FontAwesomeIcon icon={faBars} onClick={this.showChoices} className="mobile-hamburger" />
                         &nbsp;&nbsp;
                         <input type="text" className="filter-input" onKeyUp={this.contentUpdate} type="text" /> 
                         &nbsp;&nbsp;
@@ -267,8 +285,10 @@ export class Locations extends Component {
                     </div>
 
                     <FilterBoolean boolean={this.state.filterBoolean} />
-                    <div className="myDiv">
-                        {this.displayLinks()}
+                    <div className={this.state.dropdownClasses}>
+                        <div className="myDiv">
+                            {this.displayLinks()}
+                        </div>
                     </div>
 
                 </div>
