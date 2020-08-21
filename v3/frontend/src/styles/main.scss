@@ -44,7 +44,6 @@ input {
 
 h1,
 h3 {
-  text-align: center;
   text-transform: uppercase;
   letter-spacing: 5px;
 }
@@ -74,6 +73,7 @@ ul {
   /* Safari and Chrome */
   transition: color 2s;
 }
+
 
 .filter input {
   width: 55%;
@@ -149,9 +149,14 @@ hr {
 .options-box {
   height: 100vh;
   line-height: 35px;
-  padding: 0px 10px;
+  padding: 0px 5px;
   text-align: left;
   width: 280px;
+}
+
+.filter {
+  margin: 0px 10px;
+  padding: 0px 10px
 }
 
 .options-box a {
@@ -293,11 +298,12 @@ hr {
   }
 
   .dropdown-bg-day {
-    background: linear-gradient(rgba(21, 28, 37, 1.0), rgba(21, 28, 37, 0.5));
+    background: linear-gradient(rgba(260, 260, 260, 1.0), rgba(260, 260, 260, 0.2));
+    
   }
 
   .dropdown-bg-night {
-    background: linear-gradient(rgba(260, 260, 260, 1.0), rgba(260, 260, 260, 0.2));
+    background: linear-gradient(rgba(21, 28, 37, 1.0), rgba(21, 28, 37, 0.5));
   }  
 
   .dropdown-content-1 {

@@ -3,8 +3,8 @@ import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMoon, faSun, faSearch, faMapMarkerAlt, faBars} from '@fortawesome/free-solid-svg-icons'
 import InfoWindowEx from './infoWindowEx'
-
 import axios from 'axios';
+
 let stylesDay = require('../json/content-style-day.json');
 let stylesNight = require('../json/content-style-night.json');
 
@@ -17,12 +17,13 @@ let mapOptions = (function () {
         console.log('!EXISTS');
         localStorage.setItem("mapOptions", 'stylesnight');
         return 'stylesnight';
-        // localStorage.setItem("mapOptions", JSON.stringify(mapOptions));
     }
 })();
 
 const ModeMapBg = (mapOptions === '"stylesday"')?stylesDay:stylesNight;
 let ModeSideBg = (mapOptions === '"stylesday"') ? `options-box stylesday` : `options-box stylesnight`;
+let dropdownBg = (mapOptions === '"stylesday"') ? 'dropdown-bg-day' : 'dropdown-bg-night';
+
 const Mode = props => (props.mode === '"stylesday"') ? < FontAwesomeIcon icon = {faSun}/>:<FontAwesomeIcon icon={faMoon}/>;
 const FilterBoolean = props => {
     if (props.boolean === false) {
@@ -38,21 +39,30 @@ const FilterBoolean = props => {
 export class Locations extends Component {
 
     constructor(props) {
+        
         super(props);
+
         this.state = {
             locations: [],
-            filter:[],
-            markerObjects: [],
+            filtered: {
+                locations: [],
+                moreThanOneResult: true
+            },
             markers: [],
-            filterBoolean: true, 
+            markerObjects: [],
             mode: mapOptions,
-            activeMarker: {},
-            selectedPlace: {},
-            showingInfoWindow: false,
             wiki: '',
-            dropdownContent: 'dropdown-content-1',
-            dropdownClasses: ''
+            selected: {
+                infoWindow: false,
+                place: {},
+                active: {},
+            },
+            dropdown: {
+                content: 'dropdown-content-1',
+                classes: ''
+            }
         }
+
         this.handleChange = this.handleChange.bind(this);
         this.onMarkerMounted = element => {
             this.setState(prevState => ({
@@ -63,10 +73,13 @@ export class Locations extends Component {
     
     componentDidMount() {
 
-        let dropdownBg = (this.state.mode === 'night') ? 'dropdown-bg-night' : 'dropdown-bg-day';
+        const content = this.state.dropdown.content;
 
         this.setState({
-            dropdownClasses: `${this.state.dropdownContent} ${dropdownBg}`
+            dropdown: {
+                content,
+                classes: `${content} ${dropdownBg}`
+            }
         });
 
 
@@ -86,7 +99,10 @@ export class Locations extends Component {
                 }
 
                 this.setState({
-                   filter: filtering
+                    filtered: {
+                        locations: filtering,
+                        moreThanOneResult: true
+                    },
                })
 
            })
@@ -113,13 +129,16 @@ export class Locations extends Component {
 
 
     showChoices = () => {
-        let dropdownContent = (this.state.dropdownContent === 'dropdown-content-1')?'dropdown-content-2':'dropdown-content-1';
+        let content = (this.state.dropdown.content === 'dropdown-content-1')?'dropdown-content-2':'dropdown-content-1';
 
-        let dropdownBg = (this.state.mode === 'night') ? 'dropdown-bg-night' : 'dropdown-bg-day';
+        console.log(this.state.dropdown)
+        console.log(content)
 
         this.setState({
-            dropdownContent,
-            dropdownClasses: `${dropdownContent} ${dropdownBg}`
+            dropdown: {
+                content,
+                classes: `${content} ${dropdownBg}`
+            }
         });
     }
 
@@ -137,8 +156,10 @@ export class Locations extends Component {
             }
 
             this.setState({
-                filter: filtering,
-                filterBoolean: true
+                filtered: {
+                    locations: filtering,
+                    moreThanOneResult: true
+                }
             })
 
             console.log('show all')
@@ -156,17 +177,22 @@ export class Locations extends Component {
             }
 
             this.setState({
-                filter: filtering,
-                filterBoolean: true
+                filtered: {
+                    locations: filtering,
+                    moreThanOneResult: true
+                }
             })
 
             if (count === 1) {
-                this.onMarkerClick(this.state.markerObjects[this.state.filter[0].id].props, this.state.markerObjects[this.state.filter[0].id].marker)
+                this.onMarkerClick(this.state.markerObjects[this.state.filtered.locations[0].id].props, this.state.markerObjects[this.state.filtered.locations[0].id].marker)
             }
 
             if (count === 0) {
                 this.setState({
-                    filterBoolean: false
+                    filtered: {
+                        locations: [],
+                        moreThanOneResult: false
+                    }
                 })
             }
         }
@@ -189,19 +215,18 @@ export class Locations extends Component {
         // this.props.google.maps.Size(15, 15)
 
         this.setState({
-            selectedPlace: props.value,
-            activeMarker: marker,
-            showingInfoWindow: true
+            selected: {
+                infoWindow: true,
+                place: props.value,
+                active: marker,
+            }
         })
     }
 
 
     displayMarkers = () => {
 
-        const markerIcon = (mapOptions === '"stylesday"') ? "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Location_dot_black.svg/1024px-Location_dot_black.svg.png" : "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Location_dot_cyan.svg/1200px-Location_dot_cyan.svg.png";
-
-        
-        
+        const markerIcon = (this.state.mode === '"stylesday"') ? "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Location_dot_black.svg/1024px-Location_dot_black.svg.png" : "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Location_dot_cyan.svg/1200px-Location_dot_cyan.svg.png";
 
         const iconMarker = new window.google.maps.MarkerImage(
             markerIcon,
@@ -213,7 +238,7 @@ export class Locations extends Component {
 
         let markersJsx = []
         
-        this.state.filter.forEach(location => {
+        this.state.filtered.locations.forEach(location => {
             markersJsx.push(<Marker 
                         ref={this.onMarkerMounted}
                         key={location.content._id}
@@ -241,10 +266,9 @@ export class Locations extends Component {
         let markers = this.state.markerObjects;
         let newLocations = [];
 
-        if(this.state.filter[0]!==undefined) {
-            // console.log(this.state.locations[i]._id === this.state.filter[i]._id)
-            for (let i = 0; i <= this.state.filter.length - 1; i++) {
-                newLocations.push(<p><a href="#" onClick={() => this.onMarkerClick(markers[this.state.filter[i].id].props, markers[this.state.filter[i].id].marker)}>{this.state.filter[i].content.title}</a></p>);
+        if(this.state.filtered.locations[0]!==undefined) {
+            for (let i = 0; i <= this.state.filtered.locations.length - 1; i++) {
+                newLocations.push(<p><a href="#" onClick={() => this.onMarkerClick(markers[this.state.filtered.locations[i].id].props, markers[this.state.filtered.locations[i].id].marker)}>{this.state.filtered.locations[i].content.title}</a></p>);
             }
 
         }
@@ -270,12 +294,12 @@ export class Locations extends Component {
                     </span>
 
                     <br />
-                    <h1>
-                        <FontAwesomeIcon icon={faMapMarkerAlt} />&nbsp;
-                        locations
-                    </h1>
 
                     <div className="filter">
+                        <h1>
+                            <FontAwesomeIcon icon={faMapMarkerAlt} />&nbsp;
+                            locations
+                        </h1>
 
                         <FontAwesomeIcon icon={faBars} onClick={this.showChoices} className="mobile-hamburger" />
                         &nbsp;&nbsp;
@@ -284,9 +308,10 @@ export class Locations extends Component {
                         <span><FontAwesomeIcon icon={faSearch} /></span>
                     </div>
 
-                    <FilterBoolean boolean={this.state.filterBoolean} />
-                    <div className={this.state.dropdownClasses}>
+                    
+                    <div className={this.state.dropdown.classes}>
                         <div className="myDiv">
+                            <FilterBoolean boolean={this.state.filtered.boolean} />
                             {this.displayLinks()}
                         </div>
                     </div>
@@ -317,12 +342,11 @@ export class Locations extends Component {
                     }
                     >
                     {this.displayMarkers()}
-
-                    <InfoWindowEx marker={this.state.activeMarker} visible={this.state.showingInfoWindow}>
+                    <InfoWindowEx marker={this.state.selected.active} visible={this.state.selected.infoWindow}>
                         <div>
-                            <h1>{this.state.selectedPlace.title}</h1>
-                            <p>{this.state.selectedPlace.address}</p>
-                            <p>{this.state.wiki[this.state.selectedPlace._id]}</p>
+                            <h1>{this.state.selected.place.title}</h1>
+                            <p>{this.state.selected.place.address}</p>
+                            <p>{this.state.wiki[this.state.selected.place._id]}</p>
                         </div>
                     </InfoWindowEx>
                 </Map>
