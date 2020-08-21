@@ -1,0 +1,163 @@
+@media only screen and (max-width: 1024px) and (max-height: 1366px) and (orientation: portrait) {
+    .filter {
+        .filter-input {
+            margin: 0;
+            padding: 0;
+        }
+
+        outline: none;
+
+        .mobile-hamburger {
+            display: inline;
+            vertical-align: text-bottom;
+        }
+    }
+
+    .dropdown {
+        span {
+            visibility: visible;
+        }
+
+        position: relative;
+        display: inline-block;
+    }
+
+    #wikiInfo {
+        visibility: visible;
+        margin: 0 10%;
+    }
+
+    h1 {
+        font-size: 22px;
+        margin: 0;
+        text-align: left;
+        margin-left: 10px;
+    }
+
+    hr {
+        background: #D0D7D9;
+        height: 1px;
+        margin: 0;
+        border: none;
+    }
+
+    .container {
+        margin-top: 0;
+        height: 125%;
+        position: relative;
+    }
+
+    .map {
+        position: absolute;
+        top: 20vh;
+        left: 0;
+        height: 80vh !important;
+        width: 100vw !important;
+    }
+
+    .options-box {
+        height: 20vh;
+        width: 100vw;
+        padding: 0px 0px;
+        text-align: left;
+    }
+
+    .dropdown-content-1 {
+        position: absolute;
+        width: 1024px;
+        height: 1366px;
+        z-index: 2;
+        padding: 10%;
+        transition: opacity .5s;
+        opacity: 0;
+    }
+
+    .dropdown-content-2 {
+        position: absolute;
+        width: 1024px;
+        height: 1366px;
+        z-index: 2;
+        padding: 10%;
+        transition: opacity .5s;
+        opacity: 100;
+    }
+
+    .dropdown-bg-day {
+        background: $gradient;
+    }
+
+    .dropdown-bg-night {
+        background: $gradient-night;
+    }
+
+    .refresh {
+        text-align: center;
+        cursor: pointer;
+        outline: none;
+    }
+
+    .line {
+        visibility: visible;
+        display: block;
+        padding: 0 50% 0 0;
+        border-width: 1px;
+    }
+}
+
+@media only screen and (max-width: 642px) and (max-height: 700px) {
+    body {
+        margin-top: -5%;
+    }
+
+    .options-box {
+        height: 25vh !important;
+    }
+
+    .map {
+        top: 25vh !important;
+        height: 75vh !important;
+    }
+}
+
+@media only screen and (max-width: 375px) {
+    body {
+        margin-top: -10%;
+    }
+
+    h1 {
+        text-align: left;
+    }
+
+    h3 {
+        text-align: left;
+    }
+
+    .map {
+        top: 20vh !important;
+        height: 80vh !important;
+    }
+
+    .options-box {
+        height: 20vh !important;
+    }
+
+    #wikiInfo {
+        margin-left: 15%;
+        font-size: 18px;
+        line-height: 150%;
+        padding: none;
+    }
+
+    #dropdown-content {
+        width: 375px;
+        height: 700px;
+    }
+}
+
+@media only screen and (max-width: 325px) {
+    #wikiInfo {
+        margin-left: 5%;
+        font-size: 14px;
+        line-height: 150%;
+    }
+}

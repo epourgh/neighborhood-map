@@ -278,7 +278,7 @@ export class Locations extends Component {
     }
 
     changeMode = () => {
-        mapOptions = (mapOptions == '"stylesnight"') ? 'stylesday' : 'stylesnight';
+        mapOptions = (this.state.mode == '"stylesnight"') ? 'stylesday' : 'stylesnight';
 
         localStorage.setItem("mapOptions", JSON.stringify(mapOptions));
         window.location.reload();

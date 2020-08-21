@@ -1,0 +1,186 @@
+html,
+body {
+	font-family: $font-stack;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.icon-mode-style {
+	cursor: pointer;
+	cursor: pointer;
+}
+.external-img {
+	height: 12px;
+	width: auto;
+}
+#wiki-info {
+	font-size: 13px;
+	line-height: 150%;
+	padding: 0px 10%;
+}
+.line {
+	visibility: hidden;
+}
+.myDiv {
+	a {
+		display: block;
+	}
+}
+.F-box {
+	margin-top: 0;
+}
+.dropdown {
+	span {
+		visibility: hidden;
+	}
+}
+input {
+	font-size: 12px;
+}
+h1 {
+	text-transform: uppercase;
+	letter-spacing: 5px;
+	font-size: 22px;
+	margin: 0 0 10px 0;
+}
+h3 {
+	text-transform: uppercase;
+	letter-spacing: 5px;
+	font-size: 16px;
+	margin: 20% 20% 5% 20%;
+}
+h2 {
+	font-size: 18px;
+	text-align: center;
+	margin: 0;
+}
+ul {
+	list-style-type: none;
+}
+.highlight-list {
+	-webkit-transition: color 2s;
+	transition: color 2s;
+}
+.filter {
+	input {
+		width: 55%;
+		visibility: visible;
+	}
+	.mobile-hamburger {
+		display: none;
+		cursor: pointer;
+	}
+	margin: 0px 10px;
+	padding: 0px 10px;
+}
+.refresh {
+	cursor: pointer;
+	outline: none;
+}
+.refresh-container {
+	display: none;
+}
+#refresh {
+	display: none;
+}
+hr {
+	background: #D0D7D9;
+	height: 1px;
+	margin: 20px 0 20px 0;
+	border: none;
+}
+.map {
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+	left: 20vw;
+	height: 100vh !important;
+	width: 80vw !important;
+}
+.marker {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 18px;
+	height: 18px;
+	background-color: $background;
+	border: 2px solid $color;
+	border-radius: 100%;
+	user-select: none;
+	transform: translate(-50%, -50%);
+}
+.error-message {
+  font-size: 12px;
+  position: fixed;
+  text-align: center;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  padding: 40px 0px;
+  border-radius: 30px;
+}
+
+#wikiInfo {
+	visibility: hidden;
+}
+.options-box {
+	height: 100vh;
+	line-height: 35px;
+	padding: 0px 5px;
+	text-align: left;
+	width: 280px;
+	a {
+		text-decoration: none;
+	}
+}
+.stylesday {
+	background-color: $background;
+	color: $color;
+	a {
+		color: $color;
+	}
+}
+.stylesnight {
+	background-color: $background-night;
+	color: $color-night;
+	a {
+		color: $color-night;
+	}
+}
+.rightSideClick {
+	color: red;
+	cursor: pointer;
+}
+#right-side-content-box {
+	display: none;
+	position: absolute;
+	background: $background;
+	top: 10px;
+	right: 10px;
+	width: 40vw;
+	height: 75vh;
+	border-radius: 5px;
+	overflow: scroll;
+	-webkit-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.5);
+	box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.5);
+	.exit {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		cursor: pointer;
+	}
+}
+#right-side-content {
+	margin: 50px 20px;
+}
+.text {
+	font-size: 12px;
+}
+#dropdown-content {
+	opacity: 100;
+	padding: 40px;
+}
