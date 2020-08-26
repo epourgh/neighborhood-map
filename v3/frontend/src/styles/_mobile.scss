@@ -47,11 +47,7 @@
         position: relative;
     }
 
-    .map {
-        @include position-absolute;
-        top: 20vh;
-        width: 100vw !important;
-    }
+    @include position-absolute("map", top, 20vh, left, 0vw, 100vw, 80vh);
 
     .options-box {
         height: 20vh;

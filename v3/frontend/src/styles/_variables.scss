@@ -1,9 +1,11 @@
 $font-stack: Arial, sans-serif;
 
 $color: #000;
-$background: #fff;
-$gradient: linear-gradient(rgba(260, 260, 260, 1.0), rgba(260, 260, 260, 0.2));
+$bg: #fff;
+$secondary: #425774;
+$box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.5);
 
-$color-night: #fff;
-$background-night: #151c25;
-$gradient-night: linear-gradient(rgb(21, 28, 37), rgba(21, 28, 37, 0.5));
+$gradient: linear-gradient($bg, transparentize($bg, .8));
+$color-night: invert($color);
+$bg-night: mix(invert($bg), $secondary);
+$gradient-night: linear-gradient($bg-night, transparentize($bg-night, .8));

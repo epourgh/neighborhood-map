@@ -4,12 +4,19 @@
     list-style: none;
 }
 
-@mixin position-absolute { 
-    position: absolute;
-    top: 0; 
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width: 80vw !important;
-    height: 80vh !important;
+@mixin position-absolute($name, $top-or-bottom, $firstValue, $left-or-right, $secondValue, $vw, $vh) {
+    .#{$name} {
+        position: absolute;
+        #{$top-or-bottom}: $firstValue;
+        #{$left-or-right}: $secondValue;
+        width: $vw !important;
+        height: $vh !important;
+    }
+}
+
+@mixin width-height($name, $vw, $vh) {
+    .#{$name} {
+        width: $vw !important;
+        height: $vh !important;
+    }
 }

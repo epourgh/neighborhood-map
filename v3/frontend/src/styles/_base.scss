@@ -17,10 +17,9 @@ h3 {
 .icon-mode-style {
 	cursor: pointer;
 }
-.external-img {
-	height: 12px;
-	width: auto;
-}
+
+@include width-height("external-img", 12px, auto);
+
 #wiki-info {
 	line-height: 150%;
 	padding: 0px 10%;
@@ -69,24 +68,20 @@ hr {
 	height: 1px;
 	border: none;
 }
-.map {
-	@include position-absolute;
-	left: 20vw;
-	height: 100vh !important;
-}
+
+@include position-absolute("map", top, 0, left, 20vw, 80vw, 100vh);
 
 .marker {
-	@include position-absolute;
-	top: 50%;
-	left: 50%;
-	width: 18px;
-	height: 18px;
-	background-color: $background;
+	background-color: $bg;
 	border: 2px solid $color;
 	border-radius: 100%;
 	user-select: none;
 	transform: translate(-50%, -50%);
 }
+
+@include width-height("marker", 18px, 18px);
+@include position-absolute("marker", top, 50%, left, 50%, 80vw, 80vh);
+
 .error-message {
   position: fixed;
   text-align: center;
@@ -103,22 +98,22 @@ hr {
 	visibility: hidden;
 }
 .options-box {
-	height: 100vh;
 	line-height: 35px;
 	padding: 0px 5px;
 	text-align: left;
-	width: 280px;
-
 }
+
+@include width-height("options-box", 280px, 100vh);
+
 .stylesday {
-	background-color: $background;
+	background-color: $bg;
 	color: $color;
 	a {
 		color: $color;
 	}
 }
 .stylesnight {
-	background-color: $background-night;
+	background-color: $bg-night;
 	color: $color-night;
 	a {
 		color: $color-night;
@@ -127,24 +122,19 @@ hr {
 
 #right-side-content-box {
 	display: none;
-	position: absolute;
-	background: $background;
-	top: 10px;
-	right: 10px;
-	width: 40vw;
-	height: 75vh;
+	background: $bg;
 	border-radius: 5px;
 	overflow: scroll;
-	-webkit-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.5);
-	-moz-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.5);
-	box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.5);
-	.exit {
-		position: absolute;
-		top: 10px;
-		right: 10px;
-		cursor: pointer;
-	}
+	-webkit-box-shadow: $box-shadow;
+	-moz-box-shadow: $box-shadow;
+	box-shadow: $box-shadow;
+
+	.exit {cursor: pointer;}
+	@include position-absolute("exit", top, 10px, right, 10px, 100%, 100%);
 }
+
+@include position-absolute("right-side-content-box", top, 10px, right, 10px, 40vw, 75vh);
+
 
 #dropdown-content {
 	opacity: 100;
