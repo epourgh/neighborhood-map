@@ -48,10 +48,8 @@
     }
 
     .map {
-        position: absolute;
+        @include position-absolute;
         top: 20vh;
-        left: 0;
-        height: 80vh !important;
         width: 100vw !important;
     }
 

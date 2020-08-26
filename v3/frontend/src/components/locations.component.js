@@ -296,10 +296,10 @@ export class Locations extends Component {
                     <br />
 
                     <div className="filter">
-                        <h1>
+                        <h2>
                             <FontAwesomeIcon icon={faMapMarkerAlt} />&nbsp;
                             locations
-                        </h1>
+                        </h2>
 
                         <FontAwesomeIcon icon={faBars} onClick={this.showChoices} className="mobile-hamburger" />
                         &nbsp;&nbsp;

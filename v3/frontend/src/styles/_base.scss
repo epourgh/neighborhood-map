@@ -1,13 +1,20 @@
-html,
 body {
 	font-family: $font-stack;
-	height: 100%;
-	margin: 0;
-	padding: 0;
+	@include reset-list;
+}
+
+a {
+	text-decoration: none;
+}
+
+h1,
+h2,
+h3 {
+	text-transform: uppercase;
+	letter-spacing: 5px;
 }
 
 .icon-mode-style {
-	cursor: pointer;
 	cursor: pointer;
 }
 .external-img {
@@ -15,7 +22,6 @@ body {
 	width: auto;
 }
 #wiki-info {
-	font-size: 13px;
 	line-height: 150%;
 	padding: 0px 10%;
 }
@@ -27,37 +33,13 @@ body {
 		display: block;
 	}
 }
-.F-box {
-	margin-top: 0;
-}
+
 .dropdown {
 	span {
 		visibility: hidden;
 	}
 }
-input {
-	font-size: 12px;
-}
-h1 {
-	text-transform: uppercase;
-	letter-spacing: 5px;
-	font-size: 22px;
-	margin: 0 0 10px 0;
-}
-h3 {
-	text-transform: uppercase;
-	letter-spacing: 5px;
-	font-size: 16px;
-	margin: 20% 20% 5% 20%;
-}
-h2 {
-	font-size: 18px;
-	text-align: center;
-	margin: 0;
-}
-ul {
-	list-style-type: none;
-}
+
 .highlight-list {
 	-webkit-transition: color 2s;
 	transition: color 2s;
@@ -71,8 +53,6 @@ ul {
 		display: none;
 		cursor: pointer;
 	}
-	margin: 0px 10px;
-	padding: 0px 10px;
 }
 .refresh {
 	cursor: pointer;
@@ -87,19 +67,16 @@ ul {
 hr {
 	background: #D0D7D9;
 	height: 1px;
-	margin: 20px 0 20px 0;
 	border: none;
 }
 .map {
-	position: absolute;
-	right: 0px;
-	bottom: 0px;
+	@include position-absolute;
 	left: 20vw;
 	height: 100vh !important;
-	width: 80vw !important;
 }
+
 .marker {
-	position: absolute;
+	@include position-absolute;
 	top: 50%;
 	left: 50%;
 	width: 18px;
@@ -111,7 +88,6 @@ hr {
 	transform: translate(-50%, -50%);
 }
 .error-message {
-  font-size: 12px;
   position: fixed;
   text-align: center;
   z-index: 1;
@@ -132,9 +108,7 @@ hr {
 	padding: 0px 5px;
 	text-align: left;
 	width: 280px;
-	a {
-		text-decoration: none;
-	}
+
 }
 .stylesday {
 	background-color: $background;
@@ -150,10 +124,7 @@ hr {
 		color: $color-night;
 	}
 }
-.rightSideClick {
-	color: red;
-	cursor: pointer;
-}
+
 #right-side-content-box {
 	display: none;
 	position: absolute;
@@ -174,12 +145,7 @@ hr {
 		cursor: pointer;
 	}
 }
-#right-side-content {
-	margin: 50px 20px;
-}
-.text {
-	font-size: 12px;
-}
+
 #dropdown-content {
 	opacity: 100;
 	padding: 40px;
