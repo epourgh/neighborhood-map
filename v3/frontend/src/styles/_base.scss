@@ -72,10 +72,10 @@ hr {
 @include position-absolute("map", top, 0, left, 20vw, 80vw, 100vh);
 
 .marker {
-	background-color: $bg;
-	border: 2px solid $color;
-	border-radius: 100%;
+	background-color: colorSpecs('bg');
+	border: 2px solid colorSpecs();
 	user-select: none;
+	border-radius: 100%;
 	transform: translate(-50%, -50%);
 }
 
@@ -106,23 +106,23 @@ hr {
 @include width-height("options-box", 280px, 100vh);
 
 .stylesday {
-	background-color: $bg;
-	color: $color;
+	background-color: colorSpecs('bg');
+	color: colorSpecs('');
 	a {
-		color: $color;
+		color: colorSpecs('');
 	}
 }
 .stylesnight {
-	background-color: $bg-night;
-	color: $color-night;
+	background-color: colorSpecs('bg', 'night');
+	color: colorSpecs('', 'night');
 	a {
-		color: $color-night;
+		color: colorSpecs('', 'night');
 	}
 }
 
 #right-side-content-box {
 	display: none;
-	background: $bg;
+	background: colorSpecs('bg');
 	border-radius: 5px;
 	overflow: scroll;
 	-webkit-box-shadow: $box-shadow;

@@ -1,11 +1,22 @@
 $font-stack: Arial, sans-serif;
-
-$color: #000;
-$bg: #fff;
-$secondary: #425774;
 $box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.5);
 
-$gradient: linear-gradient($bg, transparentize($bg, .8));
-$color-night: invert($color);
-$bg-night: mix(invert($bg), $secondary);
-$gradient-night: linear-gradient($bg-night, transparentize($bg-night, .8));
+@function colorSpecs($bg-or-color: false, $day-or-night: false, $gradient: false) {
+
+    $color: #000;
+    $secondary: #425774;
+
+    @if $bg-or-color =='bg' {
+        $color: invert($color);
+    }
+
+    @if $day-or-night == 'night' {
+        $color: mix(invert($color), $secondary);
+    }
+
+    @if $gradient=='gradient' {
+        $color: linear-gradient($color, transparentize($color, .8));
+    }
+
+    @return $color;
+}

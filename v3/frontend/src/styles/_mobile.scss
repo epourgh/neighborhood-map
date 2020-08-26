@@ -77,11 +77,11 @@
     }
 
     .dropdown-bg-day {
-        background: $gradient;
+        background: colorSpecs('bg', 'day', 'gradient');
     }
 
     .dropdown-bg-night {
-        background: $gradient-night;
+        background: colorSpecs('bg', 'night', 'gradient');
     }
 
     .refresh {
