@@ -24,12 +24,17 @@ h3 {
 	line-height: 150%;
 	padding: 0px 10%;
 }
+
 .line {
 	visibility: hidden;
 }
+
 .myDiv {
-	a {
-		display: block;
+	padding: 10px;
+
+	li {
+		list-style: none;
+		list-style-position: inside;
 	}
 }
 
@@ -43,26 +48,32 @@ h3 {
 	-webkit-transition: color 2s;
 	transition: color 2s;
 }
+
 .filter {
 	input {
 		width: 55%;
 		visibility: visible;
 	}
+
 	.mobile-hamburger {
 		display: none;
 		cursor: pointer;
 	}
 }
+
 .refresh {
 	cursor: pointer;
 	outline: none;
 }
+
 .refresh-container {
 	display: none;
 }
+
 #refresh {
 	display: none;
 }
+
 hr {
 	background: #D0D7D9;
 	height: 1px;
@@ -83,38 +94,41 @@ hr {
 @include position-absolute("marker", top, 50%, left, 50%, 80vw, 80vh);
 
 .error-message {
-  position: fixed;
-  text-align: center;
-  z-index: 1;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  padding: 40px 0px;
-  border-radius: 30px;
+	position: fixed;
+	text-align: center;
+	z-index: 1;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+	padding: 40px 0px;
+	border-radius: 30px;
 }
 
 #wikiInfo {
 	visibility: hidden;
 }
-.options-box {
+
+div .options-box {
 	line-height: 35px;
-	padding: 0px 5px;
-	text-align: left;
+	padding: 10px 15px;
 }
 
-@include width-height("options-box", 280px, 100vh);
+@include width-height("options-box", 20vw, 100vh);
 
 .stylesday {
 	background-color: colorSpecs('bg');
 	color: colorSpecs('');
+
 	a {
 		color: colorSpecs('');
 	}
 }
+
 .stylesnight {
 	background-color: colorSpecs('bg', 'night');
 	color: colorSpecs('', 'night');
+
 	a {
 		color: colorSpecs('', 'night');
 	}
@@ -129,7 +143,170 @@ hr {
 	-moz-box-shadow: $box-shadow;
 	box-shadow: $box-shadow;
 
-	.exit {cursor: pointer;}
+	.exit {
+		cursor: pointer;
+	}
+
+	@include position-absolute("exit", top, 10px, right, 10px, 100%, 100%);
+}
+
+@include position-absolute("right-side-content-box", top, 10px, right, 10px, 40vw, 75vh);
+
+
+#dropdown-content {
+	opacity: 100;
+	padding: 40px;
+}
+
+body {
+	font-family: $font-stack;
+	@include reset-list;
+}
+
+a {
+	text-decoration: none;
+}
+
+h1,
+h2,
+h3 {
+	text-transform: uppercase;
+	letter-spacing: 5px;
+}
+
+.icon-mode-style {
+	cursor: pointer;
+}
+
+@include width-height("external-img", 12px, auto);
+
+#wiki-info {
+	line-height: 150%;
+	padding: 0px 10%;
+}
+
+.line {
+	visibility: hidden;
+}
+
+.myDiv {
+	padding: 10px;
+
+	li {
+		list-style: none;
+		list-style-position: inside;
+	}
+}
+
+.dropdown {
+	span {
+		visibility: hidden;
+	}
+}
+
+.highlight-list {
+	-webkit-transition: color 2s;
+	transition: color 2s;
+}
+
+.filter {
+	input {
+		width: 55%;
+		visibility: visible;
+	}
+
+	.mobile-hamburger {
+		display: none;
+		cursor: pointer;
+	}
+}
+
+.refresh {
+	cursor: pointer;
+	outline: none;
+}
+
+.refresh-container {
+	display: none;
+}
+
+#refresh {
+	display: none;
+}
+
+hr {
+	background: #D0D7D9;
+	height: 1px;
+	border: none;
+}
+
+@include position-absolute("map", top, 0, left, 20vw, 80vw, 100vh);
+
+.marker {
+	background-color: colorSpecs('bg');
+	border: 2px solid colorSpecs();
+	user-select: none;
+	border-radius: 100%;
+	transform: translate(-50%, -50%);
+}
+
+@include width-height("marker", 18px, 18px);
+@include position-absolute("marker", top, 50%, left, 50%, 80vw, 80vh);
+
+.error-message {
+	position: fixed;
+	text-align: center;
+	z-index: 1;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+	padding: 40px 0px;
+	border-radius: 30px;
+}
+
+#wikiInfo {
+	visibility: hidden;
+}
+
+div .options-box {
+	line-height: 35px;
+	padding: 10px 15px;
+}
+
+@include width-height("options-box", 20vw, 100vh);
+
+.stylesday {
+	background-color: colorSpecs('bg');
+	color: colorSpecs('');
+
+	a {
+		color: colorSpecs('');
+	}
+}
+
+.stylesnight {
+	background-color: colorSpecs('bg', 'night');
+	color: colorSpecs('', 'night');
+
+	a {
+		color: colorSpecs('', 'night');
+	}
+}
+
+#right-side-content-box {
+	display: none;
+	background: colorSpecs('bg');
+	border-radius: 5px;
+	overflow: scroll;
+	-webkit-box-shadow: $box-shadow;
+	-moz-box-shadow: $box-shadow;
+	box-shadow: $box-shadow;
+
+	.exit {
+		cursor: pointer;
+	}
+
 	@include position-absolute("exit", top, 10px, right, 10px, 100%, 100%);
 }
 
