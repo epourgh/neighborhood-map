@@ -183,8 +183,17 @@ export class Locations extends Component {
                 }
             })
 
-            if (count === 1) {
-                this.onMarkerClick(this.state.markerObjects[this.state.filtered.locations[0].id].props, this.state.markerObjects[this.state.filtered.locations[0].id].marker)
+            if (count === 1 && typeof this.state.filtered.locations[0] !== "undefined") {
+
+                const filteredLocationId = this.state.filtered.locations[0].id;
+                
+                const clicked = {
+                    props: this.state.markerObjects[filteredLocationId].props, 
+                    marker: this.state.markerObjects[filteredLocationId].marker
+                };
+
+                this.onMarkerClick(clicked.props, clicked.marker)
+
             }
 
             if (count === 0) {
