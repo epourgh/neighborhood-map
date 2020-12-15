@@ -5,8 +5,9 @@ import { faMoon, faSun, faSearch, faMapMarkerAlt, faBars} from '@fortawesome/fre
 import InfoWindowEx from './infoWindowEx'
 import axios from 'axios';
 
-let stylesDay = require('../json/content-style-day.json');
-let stylesNight = require('../json/content-style-night.json');
+const backendRoute = 'http://localhost:5000';
+const stylesDay = require('../json/content-style-day.json');
+const stylesNight = require('../json/content-style-night.json');
 
 let mapOptions = (function () {
     if (localStorage.getItem("mapOptions") !== null) {
@@ -21,20 +22,18 @@ let mapOptions = (function () {
 })();
 
 const ModeMapBg = (mapOptions === '"stylesday"')?stylesDay:stylesNight;
-let ModeSideBg = (mapOptions === '"stylesday"') ? `options-box stylesday` : `options-box stylesnight`;
-let dropdownBg = (mapOptions === '"stylesday"') ? 'dropdown-bg-day' : 'dropdown-bg-night';
+const ModeSideBg = (mapOptions === '"stylesday"') ? `options-box stylesday` : `options-box stylesnight`;
+const dropdownBg = (mapOptions === '"stylesday"') ? 'dropdown-bg-day' : 'dropdown-bg-night';
 
 const Mode = props => (props.mode === '"stylesday"') ? < FontAwesomeIcon icon = {faSun}/>:<FontAwesomeIcon icon={faMoon}/>;
-const FilterBoolean = props => {
-    if (props.boolean === false) {
-        return (
-            <p>empty</p>
-        );
-    } else {
-        return <></>;
-    }
-}
 
+const CheckIfResultsExist = props => {
+    if (props.moreThanOneResult === false){
+        return(<button onClick={props.contentUpdate({target: {value: ''}})}>empty</button>);
+    } else {
+        return(<></>);
+    };
+}
 
 export class Locations extends Component {
 
@@ -83,7 +82,7 @@ export class Locations extends Component {
         });
 
 
-       axios.get('http://localhost:5000/locations/')
+       axios.get(`${backendRoute}/locations/`)
            .then(response => {
                 // this.state.Locations(response.data);
                this.setState({
@@ -110,7 +109,7 @@ export class Locations extends Component {
                console.log(error);
            })
 
-       axios.get('http://localhost:5000/locations/wiki/')
+       axios.get(`${backendRoute}/locations/wiki/`)
             .then(response => {
                    console.log(response.data);
                    this.setState({
@@ -186,7 +185,7 @@ export class Locations extends Component {
             if (count === 1 && typeof this.state.filtered.locations[0] !== "undefined") {
 
                 const filteredLocationId = this.state.filtered.locations[0].id;
-                
+
                 const clicked = {
                     props: this.state.markerObjects[filteredLocationId].props, 
                     marker: this.state.markerObjects[filteredLocationId].marker
@@ -320,7 +319,7 @@ export class Locations extends Component {
                     
                     <div className={this.state.dropdown.classes}>
                         <div className="myDiv">
-                            <FilterBoolean boolean={this.state.filtered.boolean} />
+                            <CheckIfResultsExist moreThanOneResult={this.state.filtered.moreThanOneResult} contentUpdate={this.contentUpdate}/>
                             {this.displayLinks()}
                         </div>
                     </div>
